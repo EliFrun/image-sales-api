@@ -2,12 +2,19 @@ version: "3"
 services:
     app:
         build: .
+        image: app
         container_name: app
         ports:
             - "8080:8080"
+        expose:
+            - "8080"
         environment:
-            FOO: BAR
-        command: bundle exec rails s -p 8080 -b '0.0.0.0'
+            RAILS_ENV: development
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_DB: ${POSTGRES_DB}
+            POSTGRES_HOST: psg
+        command: bundle exec rails s -p '8080' -b '0.0.0.0'
         volumes:
             - ".:/app"
         depends_on:
@@ -17,16 +24,15 @@ services:
             
 
     db:
-        image: postgres
+        image: postgres:latest
         container_name: psg
         ports:
             - "5432:5432"
+        expose:
+            - "5432"
         restart: always
         environment:
             POSTGRES_USER: ${POSTGRES_USER}
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
             POSTGRES_DB: ${POSTGRES_DB}
-            PGDATA: /var/lib/postgresql/data/pgdata
-        volumes:
-            - ./data/postgres_data:/var/lib/postgres
-            - ./dbscripts/postgres:/docker-entrypoint-initdb.d
+            POSTGRES_HOST_AUTH_METHOD: trust

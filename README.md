@@ -1,24 +1,17 @@
-# README
+# RAILS IMAGE SALES API
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This project aims to implement a rest api involving the following features
 
-Things you may want to cover:
+* adding and deleting users
 
-* Ruby version
+* adding and deleting images
 
-* System dependencies
+* facilitating the exchange of images between 2 users
 
-* Configuration
+* User retrieval
 
-* Database creation
+key assumptions:
 
-* Database initialization
+* Users must upload images (no image is without an owner)
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+* images will be stored as links or hashes (in a real application an image would be BLOBed)
