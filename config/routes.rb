@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
-  namespace :api do #, constraints: { format: 'json' } do  
-      resources :images
-      resources :users
-      resources :propertys 
-  end  
+  resources :image
+  resources :user
+  resources :property, only: [:index]
+  get '/property/:name', to: 'property#show'
+
+  post '/transaction', to: 'transaction#sell'
 end

@@ -1,11 +1,15 @@
 class PropertyController < ApplicationController
-    
-    before_action :set_property, only: [:show, :update, :destroy]
-
+  
   # GET /propertys
   def index
-    @propertys = Property.all
-    json_response(@propertys)
+    @properties = Property.all
+    resp = @properties.map do |p|
+      {
+        name: p[:name],
+        image: p[:image]
+      }
+    end
+    json_response(resp)
   end
 
   # POST /propertys
@@ -14,9 +18,16 @@ class PropertyController < ApplicationController
     json_response(@property, :created)
   end
 
-  # GET /propertys/:id
+  # GET /propertys/
   def show
-    json_response(@property)
+    @property = Property.where("name = '#{params['name']}'").all
+    resp = @property.map do | p |
+      {
+        name: p[:name],
+        image: p[:image]
+    }
+    end
+    json_response(resp)
   end
 
   # PUT /propertys/:id

@@ -29,7 +29,13 @@ update: build
 	docker-compose up -d #> /dev/null
 
 down:
+	docker-compose stop
 	docker-compose down
+
+clean: down
+	docker kill $(docker ps -q) || echo "return 0"
+	docker rm $(docker ps -a -q) || echo "return 0"
+	docker system prune
 
 shell:
 	docker exec -it app bash

@@ -2,33 +2,84 @@ class ImageController < ApplicationController
 
     before_action :set_image, only: [:show, :update, :destroy]
 
-    # GET /images
+    # GET /image
     def index
       @images = Image.all
-      if !@images do
-        return json_response({})
+      resp = @images.map do |im|
+        {
+          id: im[:image_id],
+          image_id: im[:image_id],
+          name: im[:name],
+          owner: im[:owner],
+          price: im[:price],
+          properties: im[:properties]
+        }
       end
-      json_response(@images)
+      json_response({images: resp})
     end
   
-    # POST /images
+    # POST /image
     def create
-      @image = Image.create!(image_params)
-      json_response(@image, :created)
+      images = JSON.parse(request.body.read).deep_symbolize_keys![:images]
+      image_list = []
+      images.each do |im|
+          # all keys present
+          if !%i[image_id name owner price properties].all? {|s| im.key? s} then
+            next
+          end
+          # user exists
+          if !User.find_by(user_id: im[:owner]) then
+            next
+          end
+          if Image.find_by(image_id: im[:image_id]) then
+            next
+          end
+          Image.create!(
+            id: im[:image_id],
+            image_id: im[:image_id],
+            name: im[:name],
+            owner: im[:owner],
+            price: im[:price],
+            properties: im[:properties].to_s
+          )
+          im[:properties].each do |p|
+            Property.create!(
+              id: Digest::SHA256.hexdigest("#{im[:image_id]}_#{p}")[0..6].to_i(16),
+              property_id: Digest::SHA256.hexdigest("#{im[:image_id]}_#{p}")[0..6].to_i(16),
+              name: p,
+              image: im[:image_id]
+            )
+          end
+          image_list << im[:name]
+      end
+      json_response({created: image_list}, :created)
     end
   
-    # GET /images/:id
+    # GET /image/:id
     def show
-      json_response(@image)
+      @Image = Image.find_by(image_id: params[:id])
+      if !@Image then
+        return json_response({r: "image does not exist"})
+      end
+      json_response(
+        {
+          id: @Image[:image_id],
+          image_id: @Image[:image_id],
+          name: @Image[:name],
+          owner: @Image[:owner],
+          price: @Image[:price],
+          properties: @Image[:properties]
+        }
+      )
     end
   
-    # PUT /images/:id
+    # PUT /image/:id
     def update
       @image.update(image_params)
       head :no_content
     end
   
-    # DELETE /images/:id
+    # DELETE /image/:id
     def destroy
       @image.destroy
       head :no_content
