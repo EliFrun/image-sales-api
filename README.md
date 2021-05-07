@@ -64,6 +64,6 @@ Once the server is up, the following endpoints have been implemented
 
 ## TAKEDOWN
 
-top takedown the project, run `make down`, this will kill all the containers
+to takedown the project, run `make down`, this will kill all the containers
 
 If you would like to also clean all cached container images on your system (not just from this project), run `make clean` which will delete pretty much all container information stored on your system
