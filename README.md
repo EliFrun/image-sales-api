@@ -51,9 +51,9 @@ Once the server is up, the following endpoints have been implemented
 
 `GET /user/:user_id` - list information about specific user
 
-`POST /image` - create 1 or more users - follow format from post.py 
+`POST /user` - create 1 or more users - follow format from post.py 
 
-`DELETE /image/:image_id` - delete a specific user
+`DELETE /user/:user_id` - delete a specific user
 
 `GET /property` - list all properties of all images
 
@@ -64,4 +64,6 @@ Once the server is up, the following endpoints have been implemented
 
 ## TAKEDOWN
 
-top takedown the project, run `make down`
+top takedown the project, run `make down`, this will kill all the containers
+
+If you would like to also clean all cached container images on your system (not just from this project), run `make clean` which will delete pretty much all container information stored on your system
