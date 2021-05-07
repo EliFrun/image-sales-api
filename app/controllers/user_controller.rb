@@ -61,8 +61,14 @@ class UserController < ApplicationController
   
     # DELETE /users/:id
     def destroy
-      @user.destroy
-      head :no_content
+      Image.where("owner = #{params['id']}").all.each do |im|
+        Property.where("image = #{im['image_id']}").all.each do |p|
+          p.destroy!
+        end
+        im.destroy!
+      end
+      User.find_by(user_id: params['id']).destroy
+      json_response({success: "user deleted successfully"})
     end
   
     private

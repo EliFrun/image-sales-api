@@ -75,14 +75,16 @@ class ImageController < ApplicationController
   
     # PUT /image/:id
     def update
-      @image.update(image_params)
       head :no_content
     end
   
     # DELETE /image/:id
     def destroy
-      @image.destroy
-      head :no_content
+      Property.where("image = #{params['id']}").all.each do |p|
+        p.destroy!
+      end
+      Image.find_by(image_id: params['id']).destroy
+      json_response({success: "image deleted successfully"})
     end
   
     private
