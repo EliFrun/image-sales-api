@@ -30,6 +30,8 @@ build:
 
 up: build
 	docker-compose up -d #> /dev/null
+	sleep 10
+	docker exec -it backend bin/rails db:migrate RAILS_ENV=development
 
 setup:	up
 	bundle exec dotenv rake db:migrate
