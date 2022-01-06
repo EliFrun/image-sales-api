@@ -12,7 +12,7 @@ To setup the project locally, ensure the code is executed from a unix like shell
 
 Once those tools are installed, ensure that the docker daemon is running on your machine. Then execute `make up`.
 
-this command will launch the frontend, backend, and a fresh db instance (not persistent db storage has not been implemented).
+this command will launch the frontend, backend, and a fresh db instance (persistent db storage has not been implemented).
 
 ## TAKEDOWN
 
@@ -31,24 +31,12 @@ This is a rails application which serves the frontend. Using the default Rails O
 
 Once the server is up, the following endpoints have been implemented
 
-`GET /image` - list all images
+`GET /product` - list all products
 
-`GET /image/:image_id` - list information about specific image
+`GET /product/:product_id` - list information about specific product
 
-`POST /image` - create 1 or more images - follow format from post.py
+`POST /product` - create 1 or more products
 
-`DELETE /image/:image_id` - delete a specific image
+`DELETE /produt/:product_id` - delete a specific product
 
-`GET /user` - list all users
-
-`GET /user/:user_id` - list information about specific user
-
-`POST /user` - create 1 or more users - follow format from post.py
-
-`DELETE /user/:user_id` - delete a specific user
-
-`GET /property` - list all properties of all images
-
-`GET /property/:name` - list all images with a given property name
-
-`POST /transaction` - execute a transaction between 2 users - see post_transaction.py
+`GET /products/csv` - export all products in a csv
