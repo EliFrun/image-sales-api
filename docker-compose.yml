@@ -1,9 +1,27 @@
 version: "3"
 services:
-    app:
+    frontend:
         build: .
-        image: app
-        container_name: app
+        image: frontend
+        container_name: frontend
+        ports:
+            - "3000:3000"
+        expose:
+            - "3000"
+        environment:
+            API_HOST: ${API_HOST}
+        command: npm start
+        volumes:
+            - "./frontend:/app"
+        depends_on:
+            - backend
+        links:
+            - backend
+
+    backend:
+        build: .
+        image: backend
+        container_name: backend
         ports:
             - "8080:8080"
         expose:
@@ -16,12 +34,11 @@ services:
             POSTGRES_HOST: psg
         command: bundle exec rails s -p '8080' -b '0.0.0.0'
         volumes:
-            - ".:/app"
+            - "./backend:/app"
         depends_on:
             - db
         links:
             - db
-            
 
     db:
         image: postgres:latest
