@@ -37,6 +37,6 @@ Once the server is up, the following endpoints have been implemented
 
 `POST /product` - create 1 or more products
 
-`DELETE /produt/:product_id` - delete a specific product
+`DELETE /product/:product_id` - delete a specific product
 
 `GET /products/csv` - export all products in a csv
