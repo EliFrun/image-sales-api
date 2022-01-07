@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-color: #282c34;
+  background-color: #1aa15e;
 }
 
 
@@ -13,5 +13,16 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+ul.no-bullets {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+
+.AddForm {
+  color: white !important;
 }
 

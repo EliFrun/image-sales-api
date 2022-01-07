@@ -11,7 +11,8 @@ class ProductController < ApplicationController
           name: pr[:name],
           quantity: pr[:quantity],
           price: pr[:price],
-          description: pr[:description]
+          description: pr[:description],
+          image: pr[:image]
         }
       end
       json_response({products: resp})
@@ -22,7 +23,7 @@ class ProductController < ApplicationController
       products = JSON.parse(request.body.read).deep_symbolize_keys![:products]
       product_list = []
       products.each do |pr|
-          # all keys present
+          # all keys present (image key optional)
           if !%i[product_id name quantity price description].all? {|s| pr.key? s} then
             next
           end
@@ -36,7 +37,8 @@ class ProductController < ApplicationController
                 name: pr[:name],
                 quantity: pr[:quantity],
                 price: pr[:price],
-                description: pr[:description]
+                description: pr[:description],
+                image: pr[:image]
             )
             product_list << pr[:name]
           rescue => e
@@ -59,15 +61,19 @@ class ProductController < ApplicationController
             name: @Product[:name],
             quantity: @Product[:quantity],
             price: @Product[:price],
-            description: @Product[:description]
+            description: @Product[:description],
+            image: @Product[:image]
         }
       )
     end
 
     # PUT /product/:id
-    # not implemented
     def update
-      head :no_content
+      @product = Product.find_by(id: params[:id])
+      @product.update_columns(params[:product].to_unsafe_h)
+      json_response({
+        product: @product
+      })
     end
 
     # DELETE /product/:id
