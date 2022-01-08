@@ -2,11 +2,12 @@
 
 ## DEMO
 
-[![Demonstration](TODO: add picture)](TODO: add video link "")
+[![Demonstration](https://img.youtube.com/vi/atWp3MAlSp4/hqdefault.jpg)](https://www.youtube.com/watch?v=atWp3MAlSp4)
 
 ## SETUP
 
 To setup the project locally, ensure the code is executed from a unix like shell and the following packages are installed:
+- `npm`
 - `docker`
 - `make`
 
@@ -14,6 +15,7 @@ Once those tools are installed, ensure that the docker daemon is running on your
 
 this command will launch the frontend, backend, and a fresh db instance (persistent db storage has not been implemented).
 
+If the frontend container is exiting, run `make build-frontend-dev` which will create a `node_modules` folder and resolve dependency issues.
 ## TAKEDOWN
 
 to takedown the project, run `make down`, this will kill all the containers
@@ -40,3 +42,5 @@ Once the server is up, the following endpoints have been implemented
 `DELETE /product/:product_id` - delete a specific product
 
 `GET /products/csv` - export all products in a csv
+
+`PUT /product/:product_id` - update values for an existing product

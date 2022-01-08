@@ -110,6 +110,9 @@ export class ItemList extends Component {
     renderPreview() {
         if (this.state.preview > 0 && this.state.items.length > 0) {
             let previewItem = this.state.items.filter((val) => {return val.product_id == this.state.preview})[0]
+            if (!previewItem) {
+                return <></>
+            }
             return (
                 <div>
                     <header>product_id: {previewItem.product_id}, name: {previewItem.name}, quantity: {previewItem.quantity}, price: {previewItem.price}</header>
